@@ -1,2 +1,0 @@
-# esame3aMediaRicccc
-hi
