@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentazione - Riccardo Pichini</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        img {
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .tablet {
+            width: 800px;
+            height: 600px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .tablet::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Slide Titolo */
+        .title-slide h1 {
+            font-size: 48px;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .title-slide p {
+            font-size: 20px;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        /* Homescreen */
+        .homescreen {
+            padding: 30px 20px;
+            justify-content: flex-start;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            max-width: 650px;
+            flex-grow: 1;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .app:hover {
+            transform: scale(1.1);
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .app-name {
+            color: white;
+            font-size: 13px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Colori app specifici */
+        .app-italiano { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .app-inglese { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .app-storia { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .app-geografia { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .app-spagnolo { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .app-scienze { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .app-tecnologia { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .app-arte { background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%); }
+        .app-musica { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+        .app-ed-fisica { background: linear-gradient(135deg, #f77062 0%, #fe5196 100%); }
+        .app-religione { background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); }
+        .app-ed-civica { background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); }
+
+        /* Slide materia */
+        .subject-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .subject-slide h2 {
+            font-size: 42px;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .subject-slide .content {
+            color: white;
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+        }
+
+        .content {
+            display: flex;       /* Affianca gli elementi */
+            align-items: center; /* Allinea immagine e testo al centro in verticale */
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="tablet">
+        <div class="screen">
+            <!-- Slide 1: Titolo -->
+            <div class="slide title-slide active">
+                <h1>Internet e Web</h1>
+                <p>La rivoluzione digitale che ha cambiato il mondo</p>
+            </div>
+
+            <!-- Slide 2: Homescreen -->
+            <div class="slide homescreen">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <span>100% 📶</span>
+                </div>
+                <div class="apps-grid">
+                    <div class="app" onclick="showSlide('tecnologia')">
+                        <div class="app-icon app-tecnologia">⚙️</div>
+                        <div class="app-name">Tecnologia</div>
+                    </div>
+                    <div class="app" onclick="showSlide('geografia')">
+                        <div class="app-icon app-geografia">🌍</div>
+                        <div class="app-name">Geografia</div>
+                    </div>
+                    <div class="app" onclick="showSlide('storia')">
+                        <div class="app-icon app-storia">🏛️</div>
+                        <div class="app-name">Storia</div>
+                    </div>
+                    <div class="app" onclick="showSlide('arte')">
+                        <div class="app-icon app-arte">🎨</div>
+                        <div class="app-name">Arte</div>
+                    </div>
+                    <div class="app" onclick="showSlide('italiano')">
+                        <div class="app-icon app-italiano">📚</div>
+                        <div class="app-name">Italiano</div>
+                    </div>
+                    <div class="app" onclick="showSlide('inglese')">
+                        <div class="app-icon app-inglese">🇬🇧</div>
+                        <div class="app-name">Inglese</div>
+                    </div>
+                    
+                    <div class="app" onclick="showSlide('spagnolo')">
+                        <div class="app-icon app-spagnolo">🔢</div>
+                        <div class="app-name">Spagnolo</div>
+                    </div>
+                    <div class="app" onclick="showSlide('scienze')">
+                        <div class="app-icon app-scienze">🧪</div>
+                        <div class="app-name">Scienze</div>
+                    </div>
+                    <div class="app" onclick="showSlide('musica')">
+                        <div class="app-icon app-musica">🎵</div>
+                        <div class="app-name">Musica</div>
+                    </div>
+                    <div class="app" onclick="showSlide('ed-fisica')">
+                        <div class="app-icon app-ed-fisica">⚽</div>
+                        <div class="app-name">Ed. Fisica</div>
+                    </div>
+                    <div class="app" onclick="showSlide('religione')">
+                        <div class="app-icon app-religione">✝️</div>
+                        <div class="app-name">Religione</div>
+                    </div>
+                    <div class="app" onclick="showSlide('ed-civica')">
+                        <div class="app-icon app-ed-civica">🏛️</div>
+                        <div class="app-name">Ed. Civica</div>
+                    </div>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <!-- Slide materie -->
+            <div class="slide subject-slide" id="italiano">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>📚 Italiano</h2>
+                <div class="content">
+                <p>riga 1 yap yap yap yap yap <br> riga 2 yap yap <br> riga 3 yap yap yap <br> riga 4 yap yap <br></p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Luigi_Pirandello_1934b.jpg/250px-Luigi_Pirandello_1934b.jpg" alt="pirandello">
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="inglese">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🇬🇧 Inglese</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Inglese collegato a Internet e Web</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Luigi_Pirandello_1934b.jpg/250px-Luigi_Pirandello_1934b.jpg" alt="pirandello">
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="storia">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🏛️ Storia</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Storia collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="geografia">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🌍 Geografia</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Geografia collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="spagnolo">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🔢 spagnolo</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Matematica collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="scienze">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🧪 Scienze</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Scienze collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="tecnologia">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>⚙️ Tecnologia</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Tecnologia collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="arte">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🎨 Arte</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Arte collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="musica">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🎵 Musica</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Musica collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="ed-fisica">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>⚽ Educazione Fisica</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Ed. Fisica collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="religione">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>✝️ Religione</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Religione collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+
+            <div class="slide subject-slide" id="ed-civica">
+                <button class="back-button" onclick="showSlide('home')">← Home</button>
+                <h2>🏛️ Educazione Civica</h2>
+                <div class="content">
+                    <p>Inserisci qui il contenuto della materia Ed. Civica collegato a Internet e Web</p>
+                </div>
+                <div class="home-indicator"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(target) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (target === 'home') {
+                slides[1].classList.add('active'); // homescreen
+            } else if (target === 'title') {
+                slides[0].classList.add('active');
+            } else {
+                document.getElementById(target).classList.add('active');
+            }
+        }
+
+        // Auto-avanzamento dalla slide titolo
+        setTimeout(() => {
+            showSlide('home');
+        }, 1000);
+
+        // Navigazione con frecce
+        /*document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentSlide === 0) {
+                showSlide('home');
+                currentSlide = 1;
+            }
+        });
+        */ 
+    </script>
+</body>
+</html>
