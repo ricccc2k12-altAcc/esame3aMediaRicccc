@@ -93,6 +93,11 @@
         /* NOTA: Rimosse le proprietà fisse di width, height, top, left e background 
            perché ora vengono calibrate dinamicamente dallo script in modo fluido */
       }
+      
+      img.img-slide{
+        width: 100px;
+        height: 100px;
+      }
     </style>
   </head>
   <body>
@@ -138,14 +143,18 @@
 
     // --- GESTIONE CHIUSURA (Ritorno fluido reale senza stretching) ---
     if (pulsanteCliccato.classList.contains('espandi-pulsante')) {
-      // Riporta il pulsante alle dimensioni 100x100px esattamente sopra la sua cella originaria
+      
+      // NUOVO: Svuota istantaneamente il testo grande e l'immagine al clic.
+      // Così durante il rimpicciolimento la slide sarà un rettangolo blu pulito.
+      pulsanteCliccato.innerHTML = ''; 
+
+      // Avvia il movimento di rimpicciolimento verso la cella originale
       pulsanteCliccato.style.left = attualeX + 'px';
       pulsanteCliccato.style.top = attualeY + 'px';
       pulsanteCliccato.style.width = '100px';
       pulsanteCliccato.style.height = '100px';
       pulsanteCliccato.style.borderRadius = '15px';
       
-      // Abbassa fluidamente l'opacità del gradiente di sfondo
       pulsanteCliccato.style.setProperty('--op1', '0.5');
       pulsanteCliccato.style.setProperty('--op2', '0.8');
       
@@ -153,7 +162,6 @@
         bottone.classList.remove('nascondi-pulsante');
       });
 
-      // Smonta lo stile assoluto solo ad animazione completata (0.8s)
       setTimeout(() => {
         pulsanteCliccato.style.transition = 'none';
         
@@ -166,10 +174,13 @@
         pulsanteCliccato.style.margin = '';
         pulsanteCliccato.style.borderRadius = '';
 
+        // NUOVO: Ripristina la scritta originale (es. "Tec") solo ora che il tasto è tornato a 100x100px
+        pulsanteCliccato.innerHTML = pulsanteCliccato.dataset.testoOriginale;
+
         setTimeout(() => {
           pulsanteCliccato.style.transition = '';
         }, 30);
-      }, 800);
+      }, 800); // 800ms è la durata esatta della transizione
 
       return;
     }
@@ -209,6 +220,116 @@
       pulsanteCliccato.style.borderRadius = '5px'; // Raggio geometrico perfetto calcolato (15 - 10 = 5)
       pulsanteCliccato.style.setProperty('--op1', '1');
       pulsanteCliccato.style.setProperty('--op2', '1');
+      // Salviamo il testo corto (es. "Tec") in una memoria del pulsante per non perderlo
+      if (!pulsanteCliccato.dataset.testoOriginale) {
+        pulsanteCliccato.dataset.testoOriginale = pulsanteCliccato.innerText;
+      }
+
+      let contenutoSlide = "";
+
+      switch (pulsanteCliccato.dataset.testoOriginale) {
+        case "Tec":
+          contenutoSlide = `
+            <h1 class="titolo-slide">TECNOLOGIA</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Tecnologia">
+          `;
+          break;
+
+        case "Geo":
+          contenutoSlide = `
+            <h1 class="titolo-slide">GEOGRAFIA</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Geografia">
+          `;
+          break;
+
+        case "Sto":
+          contenutoSlide = `
+            <h1 class="titolo-slide">STORIA</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Storia">
+          `;
+          break;
+
+        case "Ita":
+          contenutoSlide = `
+            <h1 class="titolo-slide">ITALIANO</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Italiano">
+          `;
+          break;
+
+        case "Eng":
+          contenutoSlide = `
+            <h1 class="titolo-slide">INGLESE</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Inglese">
+          `;
+          break;
+
+        case "Esp":
+          contenutoSlide = `
+            <h1 class="titolo-slide">SPAGNOLO</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Spagnolo">
+          `;
+          break;
+
+        case "Sci":
+          contenutoSlide = `
+            <h1 class="titolo-slide">SCIENZE</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Scienze">
+          `;
+          break;
+
+        case "EdF":
+          contenutoSlide = `
+            <h1 class="titolo-slide">EDUCAZIONE FISICA</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Educazione Fisica">
+          `;
+          break;
+
+        case "EdC":
+          contenutoSlide = `
+            <h1 class="titolo-slide">EDUCAZIONE CIVICA</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Educazione Civica">
+          `;
+          break;
+
+        case "Rel":
+          contenutoSlide = `
+            <h1 class="titolo-slide">RELIGIONE</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Religione">
+          `;
+          break;
+
+        case "Mus":
+          contenutoSlide = `
+            <h1 class="titolo-slide">MUSICA</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Musica">
+          `;
+          break;
+
+        case "Art":
+          contenutoSlide = `
+            <h1 class="titolo-slide">ARTE</h1>
+            <p class="testo-slide"></p>
+            <img class="img-slide" src="" alt="Arte">
+          `;
+          break;
+
+        default:
+          contenutoSlide = `<h1 class="titolo-slide">${pulsanteCliccato.dataset.testoOriginale}</h1>`;
+      }
+
+      pulsanteCliccato.innerHTML = contenutoSlide;
+
     }, 30);
   }
 </script>
