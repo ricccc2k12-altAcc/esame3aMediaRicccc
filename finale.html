@@ -124,9 +124,10 @@
       
       .sblocca-ipad {
         /* Mantiene la centratura orizzontale (-50%) ma lo spara in alto oltre il monitor (-100vh) */
-        transform: translate(-50%, -150vh) !important;
+        transform: translate(-50%, -540px) !important;
         opacity: 0;
         pointer-events: none;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease !important;
       }
     </style>
   </head>
@@ -134,9 +135,9 @@
 
     <table>
       <button id="schermata-blocco" onclick="sbloccaSchermo()">
-        <p class="ipad-ora" id="ipadClock">12:00</p>
-        <p class="ipad-data">Lunedì, 1 Giugno</p>
-        <div class="ipad-sblocco">Clicca per sbloccare</div>
+        <p class="ipad-ora" id="ipadClock" style="font-size: 50px">12:00</p>
+        <p class="ipad-data" id="ipadDate">Lunedì, 1 Giugno </p>
+        <div class="ipad-sblocco" style="font-size: 15px">Clicca per sbloccare</div>
       </button>
       <tr>
         <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Tec</button></td>
@@ -159,6 +160,33 @@
     </table>
 
 <script>
+  function aggiornaOrologio() {
+    const oraElemento = document.getElementById('ipadClock'); 
+    const dataElemento = document.getElementById('ipadDate'); 
+    const adesso = new Date();
+
+    // 1. Aggiorna l'orario (Ore:Minuti) al secondo corrente
+    if (oraElemento) {
+      const ore = String(adesso.getHours()).padStart(2, '0');
+      const minuti = String(adesso.getMinutes()).padStart(2, '0');
+      oraElemento.innerText = ore + ':' + minuti;
+    }
+
+    // 2. Aggiorna la data in tempo reale (es. "Lunedì, 1 giugno")
+    if (dataElemento) {
+      const opzioni = { weekday: 'long', day: 'numeric', month: 'long' };
+      let dataFormattata = adesso.toLocaleDateString('it-IT', opzioni);
+
+      // Converte la prima lettera del giorno in maiuscola (es. "lunedì" -> "Lunedì")
+      dataFormattata = dataFormattata.charAt(0).toUpperCase() + dataFormattata.slice(1);
+      dataElemento.innerText = dataFormattata;
+    }
+  }
+  // Forza il timer a ricalcolare i dati ogni secondo (1000ms)
+  setInterval(aggiornaOrologio, 1000);
+  aggiornaOrologio();
+  
+  
   function changeslide(pulsanteCliccato) {
     const tabella = document.querySelector('table');
     const pulsantiMaterie = document.querySelectorAll(".materia");
