@@ -28,60 +28,70 @@
         background-image: url("https://res.allmacwallpaper.com/get/MacBook-Air-13-inch-wallpapers/Minimalist-blue-1440x900/1686-4.jpg");
         background-size: cover;
         background-position: center;
+        
+        overflow: hidden;
       }
 
       td {
         width: 100px; 
         height: 100px;
         border: 1px solid rgb(255, 255, 255, 0);
-				background-color: rgb(255, 255, 255, 0);
+        background-color: rgb(255, 255, 255, 0);
       }
 			
       td p {
         margin: 0;
       }
 			
-			button {
-				width: 100px; 
+      button {
+        width: 100px; 
         height: 100px;
-				background: linear-gradient(180deg, rgba(24, 63, 125, 0.5) 0%, rgba(24, 63, 125, 0.8) 100%);
-				border: 0px solid white;
-				border-radius: 15px;
-				cursor: pointer;
-        /*transition: background-image 0.2s ease;*/
-				text-align: center;
+        background: linear-gradient(180deg, rgba(24, 63, 125, var(--op1, 0.5)) 0%, rgba(24, 63, 125, var(--op2, 0.8)) 100%);
+        border: 0px solid white;
+        border-radius: 15px;
+        text-align: center;
         color: #dae4f5;
-				font-size: 25px;
-				font-family: "Helvetica Neue", Helvetica;
-        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
-			}
+        font-size: 25px;
+        font-family: "Helvetica Neue", Helvetica;
+        /* Forza l'ancoraggio centrale per evitare disallineamenti asimmetrici */
+        transform-origin: center center !important; 
+        /* Transizione fluida impostata sulle proprietà geometriche e sui bordi per eliminare lo stretching del testo */
+        transition: 
+          width 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          height 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          top 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          left 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          opacity 0.6s ease, 
+          border-radius 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      }
 			
-			button:hover {
+      button:hover {
         background: linear-gradient(180deg, rgba(48, 126, 250, .5) 0%, rgba(24, 63, 125, .8) 100%);
-				color: white;
-			}
+        color: white;
+        cursor: pointer;
+      }
+      
+      button.espandi-pulsante:hover {
+        background: linear-gradient(180deg, rgba(48, 126, 250, 1) 0%, rgba(24, 63, 125, 1) 100%);
+        color: white;
+        cursor: context-menu;
+      }
 			
       .nascondi-pulsante {
-        transform: translateY(400px); /* Sposta in basso di 400 pixel */
-        opacity: 0;                   /* Fa svanire il pulsante */
-        pointer-events: none;         /* Disattiva i click sui pulsanti nascosti */
-      }
+        transform: translateY(400px);
+        opacity: 0;
+        pointer-events: none;
+      } 
       
       .espandi-pulsante {
         position: absolute;
-
-        /* Rimane bloccato a 10px, 10px (angolo in alto a sinistra interno) */
-        top: 10px !important;
-        left: 10px !important;
-
-        /* Prende le dimensioni interne corrette che hai calcolato */
-        width: calc(960px - 4px) !important;
-        height: calc(540px - 8px) !important;
-
-        /* Il tuo raggio perfetto */
-        border-radius: 5px !important; 
-        margin: 0 !important;
+        margin: 0;
         z-index: 10;
+        color: white;
+        cursor: context-menu;
+        /* NOTA: Rimosse le proprietà fisse di width, height, top, left e background 
+           perché ora vengono calibrate dinamicamente dallo script in modo fluido */
       }
     </style>
   </head>
@@ -108,45 +118,100 @@
       </tr>
     </table>
 
-    <script>
-      function changeslide(pulsanteCliccato) {
-        const tabella = document.querySelector('table');
-        const pulsantiMaterie = document.querySelectorAll(".materia");
+<script>
+  function changeslide(pulsanteCliccato) {
+    const tabella = document.querySelector('table');
+    const pulsantiMaterie = document.querySelectorAll(".materia");
 
-        const rectTabella = tabella.getBoundingClientRect();
-        const rectPulsante = pulsanteCliccato.getBoundingClientRect();
+    const rectTabella = tabella.getBoundingClientRect();
+    const rectPulsante = pulsanteCliccato.getBoundingClientRect();
 
-        // 1. Trova la posizione corrente del pulsante rispetto alla tabella
-        const attualeX = rectPulsante.left - rectTabella.left;
-        const attualeY = rectPulsante.top - rectTabella.top;
+    // Rileva la posizione iniziale reale sulla griglia interna della tabella
+    const attualeX = pulsanteCliccato.dataset.origX ? parseFloat(pulsanteCliccato.dataset.origX) : (rectPulsante.left - rectTabella.left);
+    const attualeY = pulsanteCliccato.dataset.origY ? parseFloat(pulsanteCliccato.dataset.origY) : (rectPulsante.top - rectTabella.top);
 
-        // 2. Calcola quanta differenza c'è tra la posizione originale del pulsante e la sua posizione finale (10px, 10px)
-        const spostamentoX = attualeX - 10;
-        const spostamentoY = attualeY - 10;
+    // Calcolo millimetrico per centrare il box dentro la cornice nera da 10px della tabella
+    const finaleX = 10; 
+    const finaleY = 10;
+    const larghezzaFinale = 960 - 4;
+    const altezzaFinale = 540 - 8;
 
-        // 3. Calcola la proporzione di rimpicciolimento (da 940px a 100px)
-        const scalaX = 100 / (960 - 20);
-        const scalaY = 100 / (540 - 20);
+    // --- GESTIONE CHIUSURA (Ritorno fluido reale senza stretching) ---
+    if (pulsanteCliccato.classList.contains('espandi-pulsante')) {
+      // Riporta il pulsante alle dimensioni 100x100px esattamente sopra la sua cella originaria
+      pulsanteCliccato.style.left = attualeX + 'px';
+      pulsanteCliccato.style.top = attualeY + 'px';
+      pulsanteCliccato.style.width = '100px';
+      pulsanteCliccato.style.height = '100px';
+      pulsanteCliccato.style.borderRadius = '15px';
+      
+      // Abbassa fluidamente l'opacità del gradiente di sfondo
+      pulsanteCliccato.style.setProperty('--op1', '0.5');
+      pulsanteCliccato.style.setProperty('--op2', '0.8');
+      
+      pulsantiMaterie.forEach(bottone => {
+        bottone.classList.remove('nascondi-pulsante');
+      });
 
-        // 4. Trasforma il pulsante nella slide grande, ma lo sposta e rimpicciolisce con transform
-        pulsanteCliccato.classList.add('espandi-pulsante');
-        pulsanteCliccato.style.transformOrigin = 'top left'; // L'animazione partirà dal suo angolo
-        pulsanteCliccato.style.transform = 'translate(' + spostamentoX + 'px, ' + spostamentoY + 'px) scale(' + scalaX + ', ' + scalaY + ')';
+      // Smonta lo stile assoluto solo ad animazione completata (0.8s)
+      setTimeout(() => {
+        pulsanteCliccato.style.transition = 'none';
+        
+        pulsanteCliccato.classList.remove('espandi-pulsante');
+        pulsanteCliccato.style.position = '';
+        pulsanteCliccato.style.left = '';
+        pulsanteCliccato.style.top = '';
+        pulsanteCliccato.style.width = '';
+        pulsanteCliccato.style.height = '';
+        pulsanteCliccato.style.margin = '';
+        pulsanteCliccato.style.borderRadius = '';
 
-        // 5. Nel frame successivo, attiva l'animazione fluida
         setTimeout(() => {
-          // Fa scendere gli altri 11
-          pulsantiMaterie.forEach(bottone => {
-            if (bottone !== pulsanteCliccato) {
-              bottone.classList.add('nascondi-pulsante');
-            }
-          });
+          pulsanteCliccato.style.transition = '';
+        }, 30);
+      }, 800);
 
-          // Resetta il transform: il pulsante tornerà a 0,0 e a dimensione 100% con l'easing del CSS!
-          pulsanteCliccato.style.transform = 'translate(0, 0) scale(1)';
-        }, 20);
-      }
-    </script>
+      return;
+    }
+
+    // --- GESTIONE APERTURA (Allargamento lineare simmetrico sui 4 lati) ---
+    pulsanteCliccato.dataset.origX = attualeX;
+    pulsanteCliccato.dataset.origY = attualeY;
+
+    // Spegne la transizione per agganciare il tasto in modo assoluto stabile senza micro-movimenti diagonali
+    pulsanteCliccato.style.transition = 'none';
+    pulsanteCliccato.classList.add('espandi-pulsante');
     
+    // Lo blocca sopra la sua cella nativa mantenendo la forma a quadrato
+    pulsanteCliccato.style.left = attualeX + 'px';
+    pulsanteCliccato.style.top = attualeY + 'px';
+    pulsanteCliccato.style.width = '100px';
+    pulsanteCliccato.style.height = '100px';
+    pulsanteCliccato.style.borderRadius = '15px';
+    pulsanteCliccato.style.setProperty('--op1', '0.5');
+    pulsanteCliccato.style.setProperty('--op2', '0.8');
+
+    // Riaccende l'easing ed esegue l'allargamento lineare dei pixel reali
+    setTimeout(() => {
+      pulsanteCliccato.style.transition = ''; 
+      
+      pulsantiMaterie.forEach(bottone => {
+        if (bottone !== pulsanteCliccato) {
+          bottone.classList.add('nascondi-pulsante');
+        }
+      });
+
+      // Il box si allarga modificando larghezza e altezza: il testo a 25px rimane fisso e nitido
+      pulsanteCliccato.style.left = finaleX + 'px';
+      pulsanteCliccato.style.top = finaleY + 'px';
+      pulsanteCliccato.style.width = larghezzaFinale + 'px';
+      pulsanteCliccato.style.height = altezzaFinale + 'px';
+      pulsanteCliccato.style.borderRadius = '5px'; // Raggio geometrico perfetto calcolato (15 - 10 = 5)
+      pulsanteCliccato.style.setProperty('--op1', '1');
+      pulsanteCliccato.style.setProperty('--op2', '1');
+    }, 30);
+  }
+</script>
+
   </body>
 </html>
