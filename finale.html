@@ -98,28 +98,63 @@
         width: 100px;
         height: 100px;
       }
+      
+      button#schermata-blocco {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 960px;
+        height: 540px;
+        background-image: url("https://allmacwallpaper.com");
+        background-size: cover;
+        background-position: center;
+        border-radius: 5px;
+        z-index: 999; 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        cursor: pointer;
+        border: none; /* Annulla il bordo standard dei button */
+        margin: 0;
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+      }
+      
+      .sblocca-ipad {
+        /* Mantiene la centratura orizzontale (-50%) ma lo spara in alto oltre il monitor (-100vh) */
+        transform: translate(-50%, -150vh) !important;
+        opacity: 0;
+        pointer-events: none;
+      }
     </style>
   </head>
   <body>
 
-    <table>  
+    <table>
+      <button id="schermata-blocco" onclick="sbloccaSchermo()">
+        <p class="ipad-ora" id="ipadClock">12:00</p>
+        <p class="ipad-data">Lunedì, 1 Giugno</p>
+        <div class="ipad-sblocco">Clicca per sbloccare</div>
+      </button>
       <tr>
-        <td><button class="materia" onclick="changeslide(this)">Tec</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Geo</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Sto</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Ita</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Tec</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Geo</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Sto</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Ita</button></td>
       </tr>
       <tr>
-        <td><button class="materia" onclick="changeslide(this)">Eng</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Esp</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Sci</button></td>
-        <td><button class="materia" onclick="changeslide(this)">EdF</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Eng</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Esp</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Sci</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">EdF</button></td>
       </tr>
       <tr>
-        <td><button class="materia" onclick="changeslide(this)">EdC</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Rel</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Mus</button></td>
-        <td><button class="materia" onclick="changeslide(this)">Art</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">EdC</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Rel</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Mus</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Art</button></td>
       </tr>
     </table>
 
@@ -331,6 +366,24 @@
       pulsanteCliccato.innerHTML = contenutoSlide;
 
     }, 30);
+  }
+  
+  function sbloccaSchermo() {
+    const blocco = document.getElementById('schermata-blocco');
+    const pulsantiMaterie = document.querySelectorAll(".materia");
+
+    // 1. Fa scivolare giù il pulsantone della lockscreen
+    blocco.classList.add('sblocca-ipad');
+
+    // 2. Toglie la classe esistente: i 12 pulsanti risalgono fluidamente dal basso verso le loro celle
+    pulsantiMaterie.forEach(bottone => {
+      bottone.classList.remove('nascondi-pulsante');
+    });
+
+    // 3. Rimuove il pulsantone dopo 800ms per liberare l'interfaccia
+    setTimeout(() => {
+      blocco.remove();
+    }, 800);
   }
 </script>
 
