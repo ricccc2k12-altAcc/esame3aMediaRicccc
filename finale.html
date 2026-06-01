@@ -5,54 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Presentazione - Riccardo Pichini</title>
 
-    <!--<div>-->
-    <table>  
-      <tr>
-        <td>
-          <p>Tec</p>
-        </td>
-        <td>
-          <p>Geo</p>
-        </td>
-        <td>
-          <p>Sto</p>
-        </td>
-        <td>
-          <p>Ita</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>Eng</p>
-        </td>
-        <td>
-          <p>Esp</p>
-        </td>
-        <td>
-          <p>Sci</p>
-        </td>
-        <td>
-          <p>EdF</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>EdC</p>
-        </td>
-        <td>
-          <p>Rel</p>
-        </td>
-        <td>
-          <p>Mus</p>
-        </td>
-        <td>
-          <p>Art</p>
-        </td>
-      </tr>
-    </table>
-    <!--</div>-->
     <style>
-
+      body {
+        margin: 0;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
 
       table {
         border: 10px solid black;
@@ -61,21 +19,71 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 500px;
-        height: 375px;
-        border-spacing: 10px;
+        
+        width: 960px;
+        height: 540px; 
+        
+        border-spacing: 108px 55px; 
+        
+        background-image: url("https://res.allmacwallpaper.com/get/MacBook-Air-13-inch-wallpapers/Minimalist-blue-1440x900/1686-4.jpg");
+        background-size: cover;
+        background-position: center;
       }
 
       td {
-        width: 50px;
-        height: 20px;
-        border: 1px solid black;
-        border-radius: 15px;
-        text-align: center;
+        width: 100px; 
+        height: 100px;
+        border: 1px solid rgb(255, 255, 255, 0);
+				background-color: rgb(255, 255, 255, 0);
       }
-
+			
+      td p {
+        margin: 0;
+      }
+			
+			button {
+				width: 100px; 
+        height: 100px;
+				background: linear-gradient(180deg, rgba(24, 63, 125, 0.5) 0%, rgba(24, 63, 125, 0.8) 100%);
+				border: 0px solid white;
+				border-radius: 15px;
+				cursor: pointer;
+        /*transition: background-image 0.2s ease;*/
+				text-align: center;
+        color: #dae4f5;
+				font-sixe: 30px;
+				font-family: "Helvetica Neue", Helvetica;
+			}
+			
+			button:hover {
+        background: linear-gradient(180deg, rgba(48, 126, 250, .5) 0%, rgba(24, 63, 125, .8) 100%);
+				color: white;
+			}
+			
     </style>
   </head>
   <body>
+
+    <table>  
+      <tr>
+        <td><button>Tec</button></td>
+        <td><button>Geo</button></td>
+        <td><button>Sto</button></td>
+        <td><button>Ita</button></td>
+      </tr>
+      <tr>
+        <td><button>Eng</button></td>
+        <td><button>Esp</button></td>
+        <td><button>Sci</button></td>
+        <td><button>EdF</button></td>
+      </tr>
+      <tr>
+        <td><button>EdC</button></td>
+        <td><button>Rel</button></td>
+        <td><button>Mus</button></td>
+        <td><button>Art</button></td>
+      </tr>
+    </table>
+
   </body>
 </html>
