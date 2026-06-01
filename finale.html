@@ -51,8 +51,9 @@
         /*transition: background-image 0.2s ease;*/
 				text-align: center;
         color: #dae4f5;
-				font-sixe: 30px;
+				font-size: 25px;
 				font-family: "Helvetica Neue", Helvetica;
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
 			}
 			
 			button:hover {
@@ -60,30 +61,92 @@
 				color: white;
 			}
 			
+      .nascondi-pulsante {
+        transform: translateY(400px); /* Sposta in basso di 400 pixel */
+        opacity: 0;                   /* Fa svanire il pulsante */
+        pointer-events: none;         /* Disattiva i click sui pulsanti nascosti */
+      }
+      
+      .espandi-pulsante {
+        position: absolute;
+
+        /* Rimane bloccato a 10px, 10px (angolo in alto a sinistra interno) */
+        top: 10px !important;
+        left: 10px !important;
+
+        /* Prende le dimensioni interne corrette che hai calcolato */
+        width: calc(960px - 4px) !important;
+        height: calc(540px - 8px) !important;
+
+        /* Il tuo raggio perfetto */
+        border-radius: 5px !important; 
+        margin: 0 !important;
+        z-index: 10;
+      }
     </style>
   </head>
   <body>
 
     <table>  
       <tr>
-        <td><button>Tec</button></td>
-        <td><button>Geo</button></td>
-        <td><button>Sto</button></td>
-        <td><button>Ita</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Tec</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Geo</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Sto</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Ita</button></td>
       </tr>
       <tr>
-        <td><button>Eng</button></td>
-        <td><button>Esp</button></td>
-        <td><button>Sci</button></td>
-        <td><button>EdF</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Eng</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Esp</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Sci</button></td>
+        <td><button class="materia" onclick="changeslide(this)">EdF</button></td>
       </tr>
       <tr>
-        <td><button>EdC</button></td>
-        <td><button>Rel</button></td>
-        <td><button>Mus</button></td>
-        <td><button>Art</button></td>
+        <td><button class="materia" onclick="changeslide(this)">EdC</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Rel</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Mus</button></td>
+        <td><button class="materia" onclick="changeslide(this)">Art</button></td>
       </tr>
     </table>
 
+    <script>
+      function changeslide(pulsanteCliccato) {
+        const tabella = document.querySelector('table');
+        const pulsantiMaterie = document.querySelectorAll(".materia");
+
+        const rectTabella = tabella.getBoundingClientRect();
+        const rectPulsante = pulsanteCliccato.getBoundingClientRect();
+
+        // 1. Trova la posizione corrente del pulsante rispetto alla tabella
+        const attualeX = rectPulsante.left - rectTabella.left;
+        const attualeY = rectPulsante.top - rectTabella.top;
+
+        // 2. Calcola quanta differenza c'è tra la posizione originale del pulsante e la sua posizione finale (10px, 10px)
+        const spostamentoX = attualeX - 10;
+        const spostamentoY = attualeY - 10;
+
+        // 3. Calcola la proporzione di rimpicciolimento (da 940px a 100px)
+        const scalaX = 100 / (960 - 20);
+        const scalaY = 100 / (540 - 20);
+
+        // 4. Trasforma il pulsante nella slide grande, ma lo sposta e rimpicciolisce con transform
+        pulsanteCliccato.classList.add('espandi-pulsante');
+        pulsanteCliccato.style.transformOrigin = 'top left'; // L'animazione partirà dal suo angolo
+        pulsanteCliccato.style.transform = 'translate(' + spostamentoX + 'px, ' + spostamentoY + 'px) scale(' + scalaX + ', ' + scalaY + ')';
+
+        // 5. Nel frame successivo, attiva l'animazione fluida
+        setTimeout(() => {
+          // Fa scendere gli altri 11
+          pulsantiMaterie.forEach(bottone => {
+            if (bottone !== pulsanteCliccato) {
+              bottone.classList.add('nascondi-pulsante');
+            }
+          });
+
+          // Resetta il transform: il pulsante tornerà a 0,0 e a dimensione 100% con l'easing del CSS!
+          pulsanteCliccato.style.transform = 'translate(0, 0) scale(1)';
+        }, 20);
+      }
+    </script>
+    
   </body>
 </html>
