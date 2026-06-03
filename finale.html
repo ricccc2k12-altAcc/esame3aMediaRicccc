@@ -30,6 +30,10 @@
         background-position: center;
         
         overflow: hidden;
+
+	    isolation: isolate;
+	    transform-style: flat;
+	    backface-visibility: hidden;
       }
 
       td {
@@ -104,9 +108,7 @@
         transform: translate(-50%, -50%);
         width: 960px;
         height: 540px;
-        /*
-		background-image: url("https://res.allmacwallpaper.com/get/MacBook-Air-13-inch-wallpapers/Minimalist-blue-1440x900/1686-4.jpg");
-		*/
+		background-image: url();
         background-size: cover;
         background-position: center;
         border-radius: 5px;
@@ -195,8 +197,8 @@
     const rectPulsante = pulsanteCliccato.getBoundingClientRect();
 
     // Rileva la posizione iniziale reale sulla griglia interna della tabella
-    const attualeX = pulsanteCliccato.dataset.origX ? parseFloat(pulsanteCliccato.dataset.origX) : (rectPulsante.left - rectTabella.left);
-    const attualeY = pulsanteCliccato.dataset.origY ? parseFloat(pulsanteCliccato.dataset.origY) : (rectPulsante.top - rectTabella.top);
+	const attualeX = pulsanteCliccato.dataset.origX ? parseFloat(pulsanteCliccato.dataset.origX) : (rectPulsante.left - rectTabella.left - 10);
+	const attualeY = pulsanteCliccato.dataset.origY ? parseFloat(pulsanteCliccato.dataset.origY) : (rectPulsante.top - rectTabella.top - 10);
 
     // Calcolo millimetrico per centrare il box dentro la cornice nera da 10px della tabella
     const finaleX = 10; 
