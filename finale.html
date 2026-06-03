@@ -197,8 +197,8 @@
     const rectPulsante = pulsanteCliccato.getBoundingClientRect();
 
     // Rileva la posizione iniziale reale sulla griglia interna della tabella
-	const attualeX = pulsanteCliccato.dataset.origX ? parseFloat(pulsanteCliccato.dataset.origX) : (rectPulsante.left - rectTabella.left - 10);
-	const attualeY = pulsanteCliccato.dataset.origY ? parseFloat(pulsanteCliccato.dataset.origY) : (rectPulsante.top - rectTabella.top - 10);
+	const attualeX = pulsanteCliccato.dataset.origX ? parseFloat(pulsanteCliccato.dataset.origX) : (rectPulsante.left - rectTabella.left);
+	const attualeY = pulsanteCliccato.dataset.origY ? parseFloat(pulsanteCliccato.dataset.origY) : (rectPulsante.top - rectTabella.top);
 
     // Calcolo millimetrico per centrare il box dentro la cornice nera da 10px della tabella
     const finaleX = 10; 
