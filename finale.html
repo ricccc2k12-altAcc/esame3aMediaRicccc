@@ -97,8 +97,9 @@
       }
       
       img.img-slide{
-        max-width: 25%;
-        height: auto;
+        width: auto;
+        max-height: 200px;
+        margin: 0 90px;
       }
       
       button#schermata-blocco {
@@ -293,16 +294,16 @@
       switch (pulsanteCliccato.dataset.testoOriginale) {
         case "Tec":
           contenutoSlide = `
-            <h1 class="titolo-slide">TECNOLOGIA</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Tecnologia">
+            <h1 class="titolo-slide">TECNOLOGIA<br>I server</h1>
+            <p class="testo-slide">•Computer particolari sui quali viene eseguito <u>tutto internet</u>, come noi eseguiamo un' app</p><br><br>
+            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8oVutPXvX3pFT5dQf3DGp63zIi0IBHqqsCQ&s" alt="Tecnologia">
           `;
           break;
 
         case "Geo":
           contenutoSlide = `
             <h1 class="titolo-slide">GEOGRAFIA</h1>
-            <p class="testo-slide"></p>
+            <p class="testo-slide">•</p>
             <img class="img-slide" src="" alt="Geografia">
           `;
           break;
@@ -310,16 +311,16 @@
         case "Sto":
           contenutoSlide = `
             <h1 class="titolo-slide">STORIA</h1>
-            <p class="testo-slide"></p>
+            <p class="testo-slide">•</p>
             <img class="img-slide" src="" alt="Storia">
           `;
           break;
 
         case "Ita":
           contenutoSlide = `
-            <h1 class="titolo-slide">ITALIANO</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Italiano">
+            <h1 class="titolo-slide">ITALIANO<br>Uno, Nessuno e centomila</h1>
+            <p class="testo-slide">•Il modo in cui indossiamo <u>"maschere"</u> nella vita di tutti i giorni si riflette nei <u>nostri</u> profili sui <u>social media</u></p><br><br>
+            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWZ33pUG4gmoIA2Asbp6Hj9Wi899aGyLUMQQ&s" alt="Italiano">
           `;
           break;
 
@@ -333,41 +334,41 @@
 
         case "Esp":
           contenutoSlide = `
-            <h1 class="titolo-slide">SPAGNOLO</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Spagnolo">
+            <h1 class="titolo-slide">SPAGNOLO<br>La tercera lengua en el Internet</h1>
+            <p class="testo-slide">•En internet, aprender <u>español</u> abre la puerta a un <u>nuevo mundo</u></p><br><br>
+            <img class="img-slide" src="https://masjerez.com/storage/noticias/August2020/DRUOy63tEvd2oBjuQ6xg.jpg" alt="Spagnolo">
           `;
           break;
 
         case "Sci":
           contenutoSlide = `
-            <h1 class="titolo-slide">SCIENZE</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Scienze">
+            <h1 class="titolo-slide">SCIENZE<br>La dipendenza da internet</h1>
+            <p class="testo-slide">•Il sistema <u>nervoso</u>, la <u>dopamina</u> ed i <u>social</u> quasi come le droghe</p><br><br>
+            <img class="img-slide" src="https://www.psicoterapiafunzionale.it/wp-content/uploads/2020/05/foto-articolo-giulia-1.jpg" alt="Scienze">
           `;
           break;
 
         case "EdF":
           contenutoSlide = `
-            <h1 class="titolo-slide">EDUCAZIONE FISICA</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Educazione Fisica">
+            <h1 class="titolo-slide">EDUCAZIONE FISICA<br>Postura (non) corretta e text neck</h1>
+            <p class="testo-slide">•Spesso, siamo così <u>attaccati ai social</u> che non pensiamo a come stare seduti <u>bene</u></p><br><br>
+            <img class="img-slide" src="https://drcarmelogiuffrida.com/wp-content/uploads/2021/11/Immagine-a.jpg" alt="Educazione Fisica">
           `;
           break;
 
         case "EdC":
           contenutoSlide = `
-            <h1 class="titolo-slide">EDUCAZIONE CIVICA</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Educazione Civica">
+            <h1 class="titolo-slide">EDUCAZIONE CIVICA<br>il GDPR</h1>
+            <p class="testo-slide">•<u>General Data Protection Regulation</u>, uno <u>scudo</u> dai <u>pericoli</u> di Internet</p><br><br>
+            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGaYnDiYWKLfKYdSpW7NvoBE3B09nafzXdEA&s" alt="Educazione Civica">
           `;
           break;
 
         case "Rel":
           contenutoSlide = `
-            <h1 class="titolo-slide">RELIGIONE</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Religione">
+            <h1 class="titolo-slide">RELIGIONE<br>Che ne pensa la Chiesa?</h1>
+            <p class="testo-slide">•Il pensiero della CEI sull'uso dell'Internet, a braccetto col GDPR</p><br><br>
+            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrdmQ0lyxfr6aECSiGAKW7joGzdiiRt_8Rng&s" alt="Religione">
           `;
           break;
 
@@ -375,15 +376,16 @@
           contenutoSlide = `
             <h1 class="titolo-slide">MUSICA<br>Digital Audio Workstation</h1>
             <p class="testo-slide">•<u>Cosa</u> sono, <u>perchè</u> sono utili e <u>cosa c'entra</u> con internet</p><br><br>
-            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd3G9xe6lj9cK6Rqh16w6Ny_kZspkKLHjVKA&s" alt="Musica">
+            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMICKr0XUlVt0-8DbkDfBnEie30BFKPOn0Pw&s" alt="Musica">
           `;
           break;
 
         case "Art":
           contenutoSlide = `
-            <h1 class="titolo-slide">ARTE</h1>
-            <p class="testo-slide"></p>
-            <img class="img-slide" src="" alt="Arte">
+            <h1 class="titolo-slide">ARTE<br>Piet Mondrian ed i layout</h1>
+            <p class="testo-slide">•I <u>layout</u> delle pagine web, comparati alle <u>composizioni</u> di Piet</p><br><br>
+            <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG5L5ekcxIapS38xjvGhYHX0PTaxy_X6O8hA&s" alt="Arte">
+            <img class="img-slide" src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/09/Animated-Skeleton-Loading-Screens-In-Pure-CSS.jpg?fit=741%2C523&ssl=1" alt="Arte">
           `;
           break;
 
