@@ -144,8 +144,8 @@
       </button>
       <tr>
         <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Tec</button></td>
-        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Geo</button></td>
         <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Sto</button></td>
+        <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Geo</button></td>
         <td><button class="materia nascondi-pulsante" onclick="changeslide(this)">Ita</button></td>
       </tr>
       <tr>
@@ -300,33 +300,33 @@
           `;
           break;
 
-        case "Geo":
-          contenutoSlide = `
-            <h1 class="titolo-slide">GEOGRAFIA</h1>
-            <p class="testo-slide">•</p>
-            <img class="img-slide" src="" alt="Geografia">
-          `;
-          break;
-
         case "Sto":
           contenutoSlide = `
             <h1 class="titolo-slide">STORIA</h1>
-            <p class="testo-slide">•</p>
-            <img class="img-slide" src="" alt="Storia">
+            <p class="testo-slide">•Dalle origini militari di <u>Arpanet</u> alla rivoluzione digitale di <u>Internet</u></p><br><br>
+            <img class="img-slide" src="https://media.hswstatic.com/eyJidWNrZXQiOiJjb250ZW50Lmhzd3N0YXRpYy5jb20iLCJrZXkiOiJnaWZcL2FycGFuZXQtNS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjI5MH19fQ==" alt="Storia">
+          `;
+          break;
+          
+        case "Geo":
+          contenutoSlide = `
+            <h1 class="titolo-slide">GEOGRAFIA<br>La Silicon Valley</h1>
+            <p class="testo-slide">•Dove nascono le grandi <u>idee</u> che <u>cambiano il mondo</u></p><br><br>
+            <img class="img-slide" src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/2376290/DSCF9158.0.jpg" alt="Geografia">
           `;
           break;
 
         case "Ita":
           contenutoSlide = `
             <h1 class="titolo-slide">ITALIANO<br>Uno, Nessuno e centomila</h1>
-            <p class="testo-slide">•Il modo in cui indossiamo <u>"maschere"</u> nella vita di tutti i giorni si riflette nei <u>nostri</u> profili sui <u>social media</u></p><br><br>
+            <p class="testo-slide">•"Imparerai a <u>tue spese</u> che nel lungo tragitto della vita incontrerai <u>tante maschere</u> e <u>pochi volti</u>" (<i>Uno, nessuno e centomila</i>)</p><br><br>
             <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWZ33pUG4gmoIA2Asbp6Hj9Wi899aGyLUMQQ&s" alt="Italiano">
           `;
           break;
 
         case "Eng":
           contenutoSlide = `
-            <h1 class="titolo-slide">INGLESE <br> The picture of Dorian Gray</h1>
+            <h1 class="titolo-slide">INGLESE<br>The picture of Dorian Gray</h1>
             <p class="testo-slide">•<u>Our</u> aim to perfectioning ourselves, nowadays reflected in <u>our</u> social media profiles</p><br><br>
             <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRBqLfHm2PH-psghP3qZ1ZqvgAfohkIQZ1988n6Pfhm--ADxSBa_OlQLk&s=10" alt="Inglese">
           `;
@@ -383,7 +383,7 @@
         case "Art":
           contenutoSlide = `
             <h1 class="titolo-slide">ARTE<br>Piet Mondrian ed i layout</h1>
-            <p class="testo-slide">•I <u>layout</u> delle pagine web, comparati alle <u>composizioni</u> di Piet</p><br><br>
+            <p class="testo-slide">•I <u>layout</u> delle pagine web, comparati alle <u>composizioni</u> dell' artista</p><br><br>
             <img class="img-slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG5L5ekcxIapS38xjvGhYHX0PTaxy_X6O8hA&s" alt="Arte">
             <img class="img-slide" src="https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/09/Animated-Skeleton-Loading-Screens-In-Pure-CSS.jpg?fit=741%2C523&ssl=1" alt="Arte">
           `;
